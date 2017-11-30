@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bus Ticket Reservation Widget Flat Responsive Widget Template :: w3layouts</title>
+<title>Train Ticket Reservation System</title>
 <!-- for-mobile-apps -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,57 +18,265 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
+<link rel="stylesheet" type="text/css" href="css/mystyle.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/jquery.seat-charts.js"></script>
-</head>
-<body>
+<script src="js/myscript.js"></script>
+<body id="body" id="body">
 <div class="content">
-	<h1>Bus Ticket Reservation Widget</h1>
+	<div id="aler_bg">
+		<div class="alert">
+			<span class="closebtn" id="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				Please select a seat
+		</div>
+	</div>
+	<h1>Train Ticket Reservation System</h1>
+	
 	<div class="main">
-		<h2>Book Your Seat Now?</h2>
+		<h2>Book Your Seat Now!!</h2>
 		<div class="wrapper">
 			<div id="seat-map">
-				<div class="front-indicator"><h3>Front</h3></div>
+				  	<div class="dropdown">
+					  <button class="dropbtn">Select A Cabin</button>
+					  <div class="dropdown-content">
+					  	<ol>
+					    <li class="li" id="la">Cabin 1</li>
+					    <li class="li" id="la2">Cabin 2</li>
+					    <li class="li" id="la3">Cabin 3</li>
+					    <li class="li" id="la4">Cabin 4</li>
+					    <li class="li" id="la5">Cabin 5</li>
+					    <li class="li" id="la6">Cabin 6</li>
+					    </ol>
+					  </div>
+				  </div>
+				<div class="front-indicator" id="ttle"><h3>Economy Class</h3></div>
 			</div>
 			<div class="booking-details">
 						<div id="legend"></div>
 						<h3> Selected Seats (<span id="counter">0</span>):</h3>
 						<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
 						
-						Total: <b>$<span id="total">0</span></b>
+						Total: <b>Ksh. <span id="total">0</span></b>
 						
-						<button class="checkout-button">Pay Now</button>
+						<button class="checkout-button" id="pay_now">Pay Now</button>
 			</div>
 			<div class="clear"></div>
 		</div>
+		<div class="loaderr">
+		 	<div class="loader"></div>
+		</div>
+
+		<!-- start of modal -->
+			<div id="myModal" class="modal">
+					<div class="modal-content">
+			  			<div class="modal-header">
+			    			<span class="close">×</span>
+			    			<h2 style="color: white; padding-top: 18px;">Payment For The Seats</h2>
+			  			</div>
+			  			<div class="modal-body">
+			  				<br>
+			  				<div>
+			  					<p id="amtp"></p>
+			  					<br>
+			  					<table>
+								  <tr>
+								    <th style="padding-top: 10px;font-size: 20px;">Mpesa</th>
+								    <th style="padding-top: 10px;font-size: 20px;">PayPal</th>
+								  </tr>
+								  <tr>
+								    <td>
+								    	<p style="padding: 10px;">PayBill Number: 534263<br><br>Account Number: SGRTICKET</p>
+								    </td>
+								    <td>
+								    	<p style="padding: 10px;">PayBill Number: 534263<br><br>Account Number: SGRTICKET</p>
+								    </td>
+								  </tr>
+								</table>		  					
+			  				</div>
+			  				<hr style="height: 2px; background-color: #C3B400;border: none;">
+			  				<br>
+
+				    		<form>
+							    <label for="fname">Names Of Traveller(s)</label>
+							    <input type="text" id="names" name="firstname" placeholder="Enter Names seperated by semi colons e.g. Oliver watiti; Augustine Wafula" required>
+
+							    <label for="country">MPESA/PayPal Confirmation Code:</label>
+							    <input type="text" id="pay" name="lastname" placeholder="LKK5AKGRVL" required>
+							    <hr style="height: 2px; background-color: #C3B400;border: none;">
+  
+    							<input type="submit" value="Submit">
+  							</form>
+			  			</div>
+					</div>
+			</div>
+		<!-- end of my modal -->
+		<!-- start of modal -->
+			<div id="myModal_start" class="modal">
+					<div class="modal-content">
+			  			<div class="modal-header">
+			    			<span class="close" id="_close">×</span>
+			    			<h2 style="color: white; padding-top: 18px;">Welcome To SGR Ticket Reservation System</h2>
+			  			</div>
+			  			<div class="modal-body">
+			  					<div style="display: inline;">
+			  						<br>
+							    <label for="fname">Select Date Of Travel</label><br>
+							    <input type="Number" id="day" name="day" style="float: left; margin-right: 20px;" placeholder="Day" required>
+							    <select id="month" name="month" style="margin-right: 20px;">
+							    	<option>January</option>
+							    	<option>February</option>
+							    	<option>March</option>
+							    	<option>April</option>
+							    	<option>May</option>
+							    	<option>June</option>
+							    	<option>July</option>
+							    	<option>August</option>
+							    	<option>September</option>
+							    	<option>October</option>
+							    	<option>November</option>
+							    	<option>December</option>
+							    </select>
+							    <input type="text" id="year" value="2017" name="year" style="margin-right: 20px;" placeholder="Year" required disabled>
+							    <SELECT id="time" name="time" style="margin-right: 2px;" placeholder="Time">
+							  		<option>09:00Hr</option>
+							  		<option>12:00Hr</option>
+							    </SELECT>
+							    <br><br><hr style="height: 2px; background-color: #C3B400;border: none;"><br>
+							    <label for="fname">Select Terminals</label><br>
+							    <label for="fname">From:</label>
+							    <SELECT id="from" name="from" style="margin-right: 20px;">
+							  		<option>Nairobi</option>
+							  		<option>Mtito Andei</option>
+							  		<option>Mombasa</option>
+							  		<option>Voi</option>
+							    </SELECT>
+							    <label for="fname">To:</label>
+							    <SELECT id="to" name="to">
+							  		<option>Mombasa</option>
+							  		<option>Nairobi</option>
+							  		<option>Mtito Andei</option>
+							  		<option>Voi</option>
+							    </SELECT>
+  								<br>
+  								<br>
+  								<hr style="height: 2px; background-color: #C3B400;border: none;">
+  								<br>
+    							<button id="strt" style="margin-left: 44px;">Continue</button>
+    							<br>
+  							</div>
+			  			</div>
+					</div>
+			</div>
+		<!-- end of my modal -->
+
 		<script>
-				var firstSeatLabel = 1;
+		var myseats=[];
+		var booked=[];
+		var sel_cabin="cabin1";
+		$(document).ready(function(){
+
+				function ld_data() {
+
+					load_seats(booked);
+
+				}
+				function removeSt() {
+					while(booked.length>0){
+						booked.pop();
+					}
+					$(".seatCharts-row").remove();
+					$(".seatCharts-legendItem").remove();
+					$("#seat-map,#seat-map *").unbind().removeData();
+				}
+
+				function load_data(cab){
+					$(".loaderr").css("display", "block");
+
+					$.post("track.php",
+						{
+					        cabin: cab,
+					        _date: "Duckburg"
+					    },
+					function(data, status){
+					data=data.slice(1,-1).trim();
+        			var booke=data.split("#");
+        			for (var i = 0; i <booke.length; i++) {
+        				booked.push(booke[i]);
+        			}
+    			});
+    			window.setTimeout(ld_data,600);	
+			}
+
+			$("#strt").click(function(){
+  				load_data("cabin1");
+  				$("#myModal_start").css("display", "none");
+			});
+
+			$("#la").click(function(){
+				removeSt();
+  				load_data("cabin1");
+  				$("#ttle").text("First Class");
+  				$(".loaderr").css("display", "block");
+			});
+			$("#la2").click(function(){
+				removeSt();
+				sel_cabin="cabin2";
+  				load_data("cabin2");
+  				$("#ttle").text("First Class");
+  				$(".loaderr").css("display", "block");
+			});
+			$("#la3").click(function(){
+				removeSt();
+				sel_cabin="cabin3";
+  				load_data("cabin3");
+  				$("#ttle").text("Economy Class");
+  				$(".loaderr").css("display", "block");
+			});
+			$("#la4").click(function(){
+				removeSt();
+  				load_data("cabin4");
+  				sel_cabin="cabin4";
+  				$("#ttle").text("Economy Class");
+  				$(".loaderr").css("display", "block");
+			});
+			$("#la5").click(function(){
+				removeSt();
+  				load_data("cabin5");
+  				sel_cabin="cabin5";
+  				$("#ttle").text("Economy Class");
+  				$(".loaderr").css("display", "block");
+			});
+			$("#la6").click(function(){
+				removeSt()
+  				load_data("cabin6");
+  				sel_cabin="cabin6";
+  				$("#ttle").text("Economy Class");
+  				$(".loaderr").css("display", "block");
+			});
 			
-				$(document).ready(function() {
-					var $cart = $('#selected-seats'),
-						$counter = $('#counter'),
-						$total = $('#total'),
+		});
+		</script>
+		<script>
+								
+				function load_seats(book){
+					$(".loaderr").css("display", "none");
+					var firstSeatLabel = 1;
+
+					var $seatss=['ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee',];
+					var $cart = $('#selected-seats');
+					var	$counter = $('#counter');
+					var	$total = $('#total'),
 						sc = $('#seat-map').seatCharts({
-						map: [
-							'ff_ff',
-							'ff_ff',
-							'ee_ee',
-							'ee_ee',
-							'ee___',
-							'ee_ee',
-							'ee_ee',
-							'ee_ee',
-							'eeeee',
-						],
+						map: $seatss,
 						seats: {
 							f: {
-								price   : 100,
+								price   : 1200,
 								classes : 'first-class', //your custom CSS class
 								category: 'First Class'
 							},
 							e: {
-								price   : 40,
+								price   : 1000,
 								classes : 'economy-class', //your custom CSS class
 								category: 'Economy Class'
 							}					
@@ -83,19 +291,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						legend : {
 							node : $('#legend'),
 							items : [
-								[ 'f', 'available',   'First Class' ],
-								[ 'e', 'available',   'Economy Class'],
+								// [ 'f', 'available',   'First Class' ],
+								[ 'e', 'available',   'Available Seats'],
 								[ 'f', 'unavailable', 'Already Booked']
 							]					
 						},
 						click: function () {
 							if (this.status() == 'available') {
 								//let's create a new <li> which we'll add to the cart items
-								$('<li>'+this.data().category+' : Seat no '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+								$('<li>'+this.data().category+' : Seat no '+this.settings.label+': <b>Ksh.'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
 									.attr('id', 'cart-item-'+this.settings.id)
 									.data('seatId', this.settings.id)
 									.appendTo($cart);
-								
+									//
+									myseats.push(this.settings.id+"#");
+
 								/*
 								 * Lets update the counter and total
 								 *
@@ -126,6 +336,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						}
 					});
 
+					$("#pay_now").click(function(){
+						$("#amtp").text("Pay Ksh."+$total.text()+" To complete Reservation");
+						$.post("_book.php",
+						{
+							seats: myseats,
+							cabin: sel_cabin
+
+						}
+							,function(data,status){
+								alert(data);
+
+						});
+					});
+
 					//this will handle "[cancel]" link clicks
 					$('#selected-seats').on('click', '.cancel-cart-item', function () {
 						//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
@@ -133,10 +357,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					});
 
 					//let's pretend some seats have already been booked
-					sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
-			
-			});
+					sc.get(book).status('unavailable');
+					}				
 
+			
 			function recalculateTotal(sc) {
 				var total = 0;
 			
@@ -149,7 +373,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 		</script>
 	</div>
-	<p class="copy_rights">&copy; 2016 Bus Ticket Reservation Widget. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank"> W3layouts</a></p>
+	<p class="copy_rights">&copy; 2017 Train Ticket Reservation System. All Rights Reserved | Design by CodeGreedDevelopers</p>
 </div>
 <script src="js/jquery.nicescroll.js"></script>
 <script src="js/scripts.js"></script>
