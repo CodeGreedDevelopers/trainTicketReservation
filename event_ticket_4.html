@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HTML to API - event tickets</title>
+  <link href='https://fonts.googleapis.com/css?family=Kreon:700|Audiowide&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <!-- <link rel="stylesheet" href="styles/main.css" media="screen" charset="utf-8"/> -->
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta http-equiv="content-type" content="text-html; charset=utf-8">
+  <script src="js/jquery-1.11.0.min.js"></script>
+</head>
+
+<style>
+  body {
+    margin: 0;
+    color: #872F67;
+    font-family: "Audiowide", cursive;
+    font-weight: 400;
+    font-size: 25px;
+  }
+
+  .container {
+    width: 795px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  section {
+    position: relative;
+    height: 280px;
+    width: 100%;
+    background-image: url(images/bg.jpg);
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  section .left {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    width: 685px;
+    padding: 35px 0 0 110px;
+    text-align: left;
+  }
+  section .right {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    width: 110px;
+    padding: 30px 30px 0 0;
+  }
+  section .event {
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 1.6em;
+    line-height: 35px;
+    text-transform: uppercase;
+  }
+  section .title {
+    margin-bottom: 20px;
+    color: #4AB4C4;
+    line-height: 12px;
+  }
+  section .info {
+    font-size: 0.8em;
+    font-size: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  section .seats {
+    margin-bottom: 15px;
+    color: #4AB4C4;
+    font-family: "Kreon", serif;
+    font-size: 0.36em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  section .seats:last-child {
+    margin-bottom: 0;
+  }
+  section .seats span {
+    display: block;
+    margin-bottom: 5px;
+    padding: 10px 0;
+    color: #fff;
+    background: #4AB4C4;
+    font-size: 1.777em;
+  }
+</style>
+
+<body onload="get_data()" id="test">
+  <!-- <div class="container">
+    <section>
+      <div class="left">
+        <div class="event">Madaraka Express</div>
+        <div class="title">Date :</div>
+        <div class="title">Time :</div>
+        <div class="title">Destination:</div>
+        <div class="title">Ticket S/No:</div>
+        <div class="info">Please ensure That you do not loose the ticket before boarding the train.<br>Have a Nice Jouney</div>
+      </div>
+      <div class="right">
+        <div class="seats"><span>A</span>Cabin</div>
+        <div class="seats"><span>13</span>row</div>
+        <div class="seats"><span>120</span>seat</div>
+      </div>
+    </section>
+  </div> -->
+<script type="text/javascript">
+      function get_data() {
+        var my_details=sessionStorage.getItem("my_details");
+        var x=JSON.parse(my_details);
+
+        $(document).ready(function () {
+         for (var w = 0; w <= x.length; w++) {
+          var dt=x[w]["day_"]+" "+x[w]["month_"]+" "+x[w]["year_"];
+          var des=x[w]["from_"]+" to "+x[w]["to_"];
+
+            $('#test').append('<div class="container" id="cont'+w+'">');
+              $('#cont'+w+'').append('<section id="sec'+w+'">');
+               $('#sec'+w+'').append('<div class="left" id="left'+w+'">');
+                $('#left'+w+'').append('<div class="event">Madaraka Express</div>');
+                $('#left'+w+'').append('<div class="title">Date : '+dt+'</div>');
+                $('#left'+w+'').append('<div class="title">Time : '+x[w]["time_"]+'</div>');
+                $('#left'+w+'').append('<div class="title">Destination: '+des+'</div>');
+                $('#left'+w+'').append('<div class="title">Ticket S/No:</div>');
+                $('#left'+w+'').append('<div class="info">Please ensure That you do not loose the ticket before boarding the train.<br>Have a Nice Jouney</div>');
+              $('#sec'+w+'').append('</div>');
+              $('#sec'+w+'').append('<div class="right" id="right'+w+'">');
+                        $('#right'+w+'').append('<div class="seats"><span>'+x[w]["cabin"]+'</span>Cabin</div>');
+                        //$('#right'+w+'').append('<div class="seats"><span>13</span>row</div>');
+                        $('#right'+w+'').append('<div class="seats"><span>'+x[w]["seat_"]+'</span>seat</div>');
+                $('#sec'+w+'').append('</div>');
+              $('cont'+w+'').append('</section>');
+            $('#test').append(' </div>');
+         }
+        });
+
+        
+      }
+    </script>
+
+
+
+</body>
+
+</html>

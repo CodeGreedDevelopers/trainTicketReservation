@@ -25,6 +25,8 @@ var strt=document.getElementById('strt');
 var aler=document.getElementById('aler_bg');
 var aler_close=document.getElementById('closebtn');
 
+
+
 // Get the button that opens the modal
 var btn = document.getElementById("pay_now");
 var bd=document.getElementById('body');

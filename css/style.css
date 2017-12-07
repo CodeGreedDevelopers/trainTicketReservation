@@ -442,7 +442,7 @@ ul#selected-seats li a {
 }
 
 /* Links inside the dropdown */
-.dropdown-content #la,#la2,#la3,#la4,#la5,#la6{
+.dropdown-content .la,.la2,.la3,.la4,.la5,.la6{
     color: black;
     padding: 12px 16px;
     /*width: 100%;*/

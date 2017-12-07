@@ -40,17 +40,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				  	<div class="dropdown">
 					  <button class="dropbtn">Select A Cabin</button>
 					  <div class="dropdown-content">
-					  	<ol>
-					    <li class="li" id="la">Cabin 1</li>
-					    <li class="li" id="la2">Cabin 2</li>
-					    <li class="li" id="la3">Cabin 3</li>
-					    <li class="li" id="la4">Cabin 4</li>
-					    <li class="li" id="la5">Cabin 5</li>
-					    <li class="li" id="la6">Cabin 6</li>
+					  	<ol id="drop_dwn">
+					    <li class="li la"  >Cabin 1</li>
+					    <li class="li la2" >Cabin 2</li>
+					    <li class="li la3" >Cabin 3</li>
+					    <li class="li la4" >Cabin 4</li>
+					    <li class="li la5" >Cabin 5</li>
+					    <li class="li la6" >Cabin 6</li>
 					    </ol>
 					  </div>
 				  </div>
-				<div class="front-indicator" id="ttle"><h3>Economy Class</h3></div>
+				<div class="front-indicator" id="ttle"><h3>Economy-Class</h3></div>
 			</div>
 			<div class="booking-details">
 						<div id="legend"></div>
@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						
 						Total: <b>Ksh. <span id="total">0</span></b>
 						
-						<button class="checkout-button" id="pay_now">Pay Now</button>
+						<button class="checkout-button" id="pay_now" onclick="cabin_select('cabin1','First-Class')">Pay Now</button>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -97,16 +97,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  				<hr style="height: 2px; background-color: #C3B400;border: none;">
 			  				<br>
 
-				    		<form>
-							    <label for="fname">Names Of Traveller(s)</label>
-							    <input type="text" id="names" name="firstname" placeholder="Enter Names seperated by semi colons e.g. Oliver watiti; Augustine Wafula" required>
+				    		
+							    <!-- <label for="fname">Names Of Traveller(s)</label>
+							    <input type="text" id="names" name="firstname" placeholder="Enter Names seperated by semi colons e.g. Oliver watiti; Augustine Wafula" required> -->
 
 							    <label for="country">MPESA/PayPal Confirmation Code:</label>
 							    <input type="text" id="pay" name="lastname" placeholder="LKK5AKGRVL" required>
 							    <hr style="height: 2px; background-color: #C3B400;border: none;">
   
-    							<input type="submit" value="Submit">
-  							</form>
+    							<input type="submit" id="payed" value="Submit">
+  							
 			  			</div>
 					</div>
 			</div>
@@ -119,7 +119,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			    			<h2 style="color: white; padding-top: 18px;">Welcome To SGR Ticket Reservation System</h2>
 			  			</div>
 			  			<div class="modal-body">
-			  					<div style="display: inline;">
+			  					<div id="stat" style="display: inline;">
 			  						<br>
 							    <label for="fname">Select Date Of Travel</label><br>
 							    <input type="Number" id="day" name="day" style="float: left; margin-right: 20px;" placeholder="Day" required>
@@ -171,14 +171,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!-- end of my modal -->
 
 		<script>
-		var myseats=[];
-		var booked=[];
+		// my variables
+		var my_details=[];
+		var myseats=[]; //carries the cureent selected pictures
+		var booked=[];	//carries the seats already booked
+		var ee=['ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee'];// for economy class
+		var ff=['ff_ff','ff_ff','ff_ff','ff_ff','ff_ff','ff_ff','ff_ff']; //for first class
+		var seat_s=ff;
 		var sel_cabin="cabin1";
+
+		var _day,_year,_month,_time,_from,_to;
+
+		//end of my variables
 		$(document).ready(function(){
 
 				function ld_data() {
 
-					load_seats(booked);
+					load_seats(booked,seat_s);
 
 				}
 				function removeSt() {
@@ -211,59 +220,98 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$("#strt").click(function(){
   				load_data("cabin1");
   				$("#myModal_start").css("display", "none");
+  				_day=$("#day").val();
+  				_month=$("#month").val();
+  				_year=$("#year").val();
+  				_time=$("#time").val();
+  				_from=$("#from").val();
+  				_to=$("#to").val();
 			});
 
-			$("#la").click(function(){
+			// function cabin_select(cabinN,cabinClass) {
+   //              removeSt();
+   //              alert("Oliver");
+   //              load_data(cabinN);
+   //              if (cabinClass=="Economy Class") {
+   //                  seat_s=ff;
+   //              }else{
+   //                  seat_s=ee;
+   //              }
+   //              sel_cabin="cabin6";
+   //              $("#ttle").text(cabinClass);
+   //              $(".loaderr").css("display", "block");
+   //          }
+   (function(){
+   			
+			$('#drop_dwn').on('click', '.li', function () {
 				removeSt();
-  				load_data("cabin1");
-  				$("#ttle").text("First Class");
-  				$(".loaderr").css("display", "block");
+				seat_s=ff;
+	  			load_data("cabin1");
+	  			$("#ttle").text("First Class");
+	  			$(".loaderr").css("display", "block");
 			});
-			$("#la2").click(function(){
+
+			$('#drop_dwn').on('click', '.la2', function () {
 				removeSt();
+				seat_s=ff;
 				sel_cabin="cabin2";
   				load_data("cabin2");
   				$("#ttle").text("First Class");
   				$(".loaderr").css("display", "block");
 			});
-			$("#la3").click(function(){
+
+			$('#drop_dwn').on('click', '.la3', function () {
 				removeSt();
 				sel_cabin="cabin3";
   				load_data("cabin3");
   				$("#ttle").text("Economy Class");
   				$(".loaderr").css("display", "block");
 			});
-			$("#la4").click(function(){
+			$('#drop_dwn').on('click', '.la4', function () {
 				removeSt();
   				load_data("cabin4");
   				sel_cabin="cabin4";
   				$("#ttle").text("Economy Class");
   				$(".loaderr").css("display", "block");
 			});
-			$("#la5").click(function(){
+			$('#drop_dwn').on('click', '.la5', function () {
 				removeSt();
   				load_data("cabin5");
   				sel_cabin="cabin5";
   				$("#ttle").text("Economy Class");
   				$(".loaderr").css("display", "block");
 			});
-			$("#la6").click(function(){
-				removeSt()
+			$('#drop_dwn').on('click', '.la6', function () {
+				removeSt();
   				load_data("cabin6");
   				sel_cabin="cabin6";
   				$("#ttle").text("Economy Class");
   				$(".loaderr").css("display", "block");
 			});
+
+			$("#payed").click(function(){
+				alert("Wow");
+				if(typeof(Storage) !== "undefined") {
+				    sessionStorage.setItem("my_details", JSON.stringify(my_details));
+				    window.location="event_ticket_4.html";
+				} else {
+				   alert("No Local Storage Allowed") 
+				}
+			});
+
+			})();
+
 			
 		});
+
 		</script>
 		<script>
-								
-				function load_seats(book){
+											
+				function load_seats(book,seats_arr){
 					$(".loaderr").css("display", "none");
 					var firstSeatLabel = 1;
 
-					var $seatss=['ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee','ee_ee',];
+					var $seatss=seats_arr;
 					var $cart = $('#selected-seats');
 					var	$counter = $('#counter');
 					var	$total = $('#total'),
@@ -291,8 +339,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						legend : {
 							node : $('#legend'),
 							items : [
-								// [ 'f', 'available',   'First Class' ],
-								[ 'e', 'available',   'Available Seats'],
+								[ 'f', 'available',   'First Class' ],
+								[ 'e', 'available',   'Economy Class'],
 								[ 'f', 'unavailable', 'Already Booked']
 							]					
 						},
@@ -305,6 +353,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									.appendTo($cart);
 									//
 									myseats.push(this.settings.id+"#");
+									var _obj=
+									{
+										day_:_day,
+										month_:_month,
+										year_:_year,
+										time_:_time,
+										from_:_from,
+										to_:_to,
+										cabin: sel_cabin,
+										seat_:this.settings.label
+									};
+
+									my_details.push(_obj);
+
+									// alert(my_details[0].seat_);
 
 								/*
 								 * Lets update the counter and total
