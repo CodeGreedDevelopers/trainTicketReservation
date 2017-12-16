@@ -2,8 +2,12 @@
   $db=mysqli_connect("localhost","root","","trainticket");
 
   $cab=$_POST['cabin'];
+  $dat=$_POST['_date'];
+  $from_=$_POST['_s_from'];
+  $to_=$_POST['_s_to'];
 
-  $res=mysqli_query($db,"SELECT $cab FROM `cabins`");
+
+  $res=mysqli_query($db,"SELECT $cab FROM `cabins` WHERE `date_`='$dat' AND `from_`='$from_' AND `to`='$to_'");
 
   $json_array;
 

@@ -3,8 +3,13 @@
 
   $seats=$_POST['seats'];
   $cabin=$_POST['cabin'];
+  $code=$_POST['code_pay'];
+  $pay=$_POST['amt_'];
+  $from_=$_POST['_from'];
+  $to_=$_POST[''];
+  $dat=$_POST[''];
 
-  $res=mysqli_query($db,"SELECT $cabin FROM `cabins`");
+  $res=mysqli_query($db,"SELECT $cabin FROM `cabins` `date_`='$dat' AND `from_`='$from_' AND `to`='$to_'");
 
   $json_array;
 

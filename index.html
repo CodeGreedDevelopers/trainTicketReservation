@@ -181,9 +181,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		var sel_cabin="cabin1";
 
 		var _day,_year,_month,_time,_from,_to;
+		var compiled_date;
 
 		//end of my variables
 		$(document).ready(function(){
+
+				$("#strt").click(function(){
+  				
+	  				_day=$("#day").val();
+	  				_month=$("#month").val();
+	  				_year=$("#year").val();
+	  				_time=$("#time").val();
+	  				_from=$("#from").val();
+	  				_to=$("#to").val();
+	  				$("#myModal_start").css("display", "none");
+	  				compiled_date=_day+""+_month+""+_year+""+_time;
+	  				load_data("cabin1");
+				});
 
 				function ld_data() {
 
@@ -201,13 +215,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 				function load_data(cab){
 					$(".loaderr").css("display", "block");
-
+					
 					$.post("track.php",
 						{
 					        cabin: cab,
-					        _date: "Duckburg"
+					        _date: compiled_date,
+					        _s_from: _from,
+					        _s_to: _to
 					    },
 					function(data, status){
+						window.alert(data+compiled_date);
 					data=data.slice(1,-1).trim();
         			var booke=data.split("#");
         			for (var i = 0; i <booke.length; i++) {
@@ -217,16 +234,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     			window.setTimeout(ld_data,600);	
 			}
 
-			$("#strt").click(function(){
-  				load_data("cabin1");
-  				$("#myModal_start").css("display", "none");
-  				_day=$("#day").val();
-  				_month=$("#month").val();
-  				_year=$("#year").val();
-  				_time=$("#time").val();
-  				_from=$("#from").val();
-  				_to=$("#to").val();
-			});
 
 			// function cabin_select(cabinN,cabinClass) {
    //              removeSt();
@@ -287,16 +294,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   				sel_cabin="cabin6";
   				$("#ttle").text("Economy Class");
   				$(".loaderr").css("display", "block");
-			});
-
-			$("#payed").click(function(){
-				alert("Wow");
-				if(typeof(Storage) !== "undefined") {
-				    sessionStorage.setItem("my_details", JSON.stringify(my_details));
-				    window.location="event_ticket_4.html";
-				} else {
-				   alert("No Local Storage Allowed") 
-				}
 			});
 
 			})();
@@ -401,17 +398,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 					$("#pay_now").click(function(){
 						$("#amtp").text("Pay Ksh."+$total.text()+" To complete Reservation");
-						$.post("_book.php",
+					});
+
+					$("#payed").click(function(){
+						var code=$("#pay").val();
+						var pay_amt=$total.text();
+						alert(code+pay_amt);
+
+				$.post("_book.php",
 						{
 							seats: myseats,
-							cabin: sel_cabin
+							cabin: sel_cabin,
+							code_pay: code,
+							amt_: pay_amt
 
 						}
 							,function(data,status){
 								alert(data);
 
 						});
-					});
+
+				if(typeof(Storage) !== "undefined") {
+				    sessionStorage.setItem("my_details", JSON.stringify(my_details));
+				    window.location="event_ticket_4.html";
+				} else {
+				   alert("No Local Storage Allowed") 
+				}
+			});
 
 					//this will handle "[cancel]" link clicks
 					$('#selected-seats').on('click', '.cancel-cart-item', function () {
